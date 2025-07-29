@@ -1,30 +1,25 @@
 class Solution {
     public void rotate(int[][] matrix) {
         int n = matrix.length;
-
-        // Process layer by layer, from outermost to inner
-        for (int layer = 0; layer < n / 2; layer++) {
-            int first = layer;
-            int last = n - layer - 1;
-
-            for (int i = first; i < last; i++) {
-                int offset = i - first;
-
-                // Save top
-                int top = matrix[first][i];
-
-                // Left -> Top
-                matrix[first][i] = matrix[last - offset][first];
-
-                // Bottom -> Left
-                matrix[last - offset][first] = matrix[last][last - offset];
-
-                // Right -> Bottom
-                matrix[last][last - offset] = matrix[i][last];
-
-                // Top -> Right
-                matrix[i][last] = top;
+        for(int i = 0; i < n; i++) {
+            for(int j = i+1; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
+        }
+        for(int i = 0; i < n; i++) {
+            reverse(matrix[i]);
+        }
+    }
+    private void reverse(int[] row) {
+        int l = 0, r = row.length-1;
+        while(l<r) {
+            int temp = row[l];
+            row[l] = row[r];
+            row[r] = temp;
+            l++;
+            r--;
         }
     }
 }
